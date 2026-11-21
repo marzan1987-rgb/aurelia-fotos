@@ -1,0 +1,456 @@
+<title>Estudio Aurelia</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: una sola columna de lectura (~68ch) con planos a ancho completo; marcas de cinta gaffer como acento */
+:root{
+  --bg:#EEF0EE; --surface:#FFFFFF; --ink:#1B1D1F; --muted:#5B6064; --line:#D3D7D4;
+  --paper:#DCE0DC; --paper-edge:#B9BFBA; --tape:#E0A200; --tape-ink:#8A5C00;
+  --beam:rgba(240,190,60,.22); --cam:#2F5D8A; --warn:#A63D2F;
+  --f-display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --f-body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141617; --surface:#1D2022; --ink:#ECEEEC; --muted:#A2A8AC; --line:#33383B;
+  --paper:#2A2E30; --paper-edge:#454B4E; --tape:#F0B428; --tape-ink:#F0B428;
+  --beam:rgba(240,190,60,.16); --cam:#7FB0E0; --warn:#E47A6A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141617; --surface:#1D2022; --ink:#ECEEEC; --muted:#A2A8AC; --line:#33383B;
+  --paper:#2A2E30; --paper-edge:#454B4E; --tape:#F0B428; --tape-ink:#F0B428;
+  --beam:rgba(240,190,60,.16); --cam:#7FB0E0; --warn:#E47A6A; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.6 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
+.wrap{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:56px}
+.read{max-width:68ch}
+header{padding-top:48px;display:flex;flex-direction:column;gap:14px}
+.eyebrow{font:600 12px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--tape-ink)}
+h1{font:800 clamp(34px,6vw,56px)/1.02 var(--f-display);margin:0;letter-spacing:-.02em;text-wrap:balance}
+h2{font:700 26px/1.15 var(--f-display);margin:0 0 6px;letter-spacing:-.01em;text-wrap:balance}
+h3{font:700 17px/1.3 var(--f-display);margin:22px 0 6px}
+p{margin:0 0 12px}
+.lead{font-size:17px;color:var(--muted);max-width:62ch}
+section{display:flex;flex-direction:column;gap:14px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:8px}
+.fact{border-top:3px solid var(--tape);padding-top:10px}
+.fact b{display:block;font:700 22px/1.1 var(--f-display);font-variant-numeric:tabular-nums}
+.fact span{color:var(--muted);font-size:13px}
+.plan{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px;overflow-x:auto}
+.plan svg{display:block;width:100%;min-width:560px;height:auto}
+.plan figcaption{font-size:13px;color:var(--muted);margin-top:8px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.grid2>*{min-width:0}
+svg text{font-family:var(--f-mono);fill:var(--ink)}
+svg .lbl{font-size:11px} svg .sm{font-size:9.5px;fill:var(--muted)}
+svg .room{fill:none;stroke:var(--ink);stroke-width:3}
+svg .paper{fill:var(--paper);stroke:var(--paper-edge)}
+svg .roll{fill:var(--paper-edge)}
+svg .vinyl{fill:none;stroke:var(--paper-edge);stroke-dasharray:5 4}
+svg .beam{fill:var(--beam)}
+svg .light{fill:var(--ink)}
+svg .soft{fill:var(--surface);stroke:var(--ink);stroke-width:2}
+svg .tape{stroke:var(--tape);stroke-width:4;stroke-linecap:round;fill:none}
+svg .tapefill{fill:var(--tape)}
+svg .cam{fill:var(--cam)} svg .fov{stroke:var(--cam);stroke-dasharray:6 4;fill:none;stroke-width:1.3}
+svg .furn{fill:none;stroke:var(--muted);stroke-width:1.5}
+svg .dim{stroke:var(--muted);stroke-width:1}
+svg .door{fill:none;stroke:var(--muted);stroke-width:1.5;stroke-dasharray:3 3}
+svg .body{fill:var(--muted)}
+svg .ink{fill:var(--ink)} svg .bg{fill:var(--surface)}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 11px/1.3 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;font-family:var(--f-mono);font-size:13px}
+tr.group td{font:700 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--tape-ink);background:var(--bg)}
+tr.total td{font-weight:700;border-top:2px solid var(--ink)}
+.code{font-family:var(--f-mono);font-size:13px;background:var(--bg);padding:1px 5px;border-radius:3px}
+.settings{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px 18px;min-width:0}
+.card h3{margin-top:0}
+dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0;font-size:14px}
+dt{font-family:var(--f-mono);font-size:12px;color:var(--muted);padding-top:2px}
+dd{margin:0}
+ol.steps,ul.list{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.never{border-left:4px solid var(--warn);padding:12px 16px;background:var(--surface);border-radius:0 6px 6px 0}
+.never h3{margin-top:0;color:var(--warn)}
+.who{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.tag{display:inline-block;font:600 11px/1 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;padding:4px 7px;border-radius:3px;background:var(--tape);color:#1B1D1F;margin-right:6px;vertical-align:2px}
+.note{font-size:13px;color:var(--muted)}
+footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+</style>
+
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Plano de estudio · pieza 3,50 × 2,30 m · ropa</div>
+  <h1>Estudio Aurelia</h1>
+  <p class="lead">Un set fijo que no se desarma, con dos modos: modelo de cuerpo entero y prenda plana para medidas. Todo queda marcado con cinta para que cualquier sesión salga igual a la anterior y la postproducción se pueda automatizar.</p>
+  <div class="facts">
+    <div class="fact"><b>~1.000.000</b><span>CLP de equipamiento (rango 0,85–1,3 M)</span></div>
+    <div class="fact"><b>~10 min</b><span>por prenda en sesión, trabajando por lotes (estimado)</span></div>
+    <div class="fact"><b>7 + 3 + 1</b><span>fotos con modelo, fotos planas y 1 video por prenda</span></div>
+    <div class="fact"><b>2,0 m</b><span>de cámara a modelo, lente ~35 mm equivalente</span></div>
+  </div>
+</header>
+
+<!-- ============ PLANO ============ -->
+<section>
+  <div class="read">
+    <div class="eyebrow">01 · El espacio</div>
+    <h2>Planta a escala</h2>
+    <p>El fondo va en el muro corto. Así los 3,50 m de largo se usan como distancia de trabajo: 1 m entre fondo y modelo, 2 m entre modelo y cámara, y medio metro detrás para quien dispara. Con un lente de 35 mm equivalente en vertical, el encuadre a esa distancia cubre justo los 2,18 m del papel (líneas azules).</p>
+  </div>
+  <figure class="plan" style="margin:0">
+    <svg viewBox="0 0 780 560" role="img" aria-label="Planta del estudio: fondo en el muro izquierdo, modelo a 1 metro, luz principal a 45 grados, relleno al lado opuesto, cámara a 3 metros del fondo">
+      <!-- sweep de papel en el piso: x 0..150cm -->
+      <rect class="paper" x="40" y="52" width="300" height="436"/>
+      <rect class="vinyl" x="100" y="120" width="240" height="300"/>
+      <text class="sm" x="108" y="138">piso vinílico 1,2 × 1,5 m sobre el papel</text>
+      <!-- rodillo -->
+      <rect class="roll" x="40" y="52" width="9" height="436"/>
+      <text class="lbl" transform="translate(66 270) rotate(-90)" text-anchor="middle">PAPEL CONTINUO 2,18 m · gris claro</text>
+      <!-- campo de visión -->
+      <line class="fov" x1="640" y1="270" x2="44" y2="64"/>
+      <line class="fov" x1="640" y1="270" x2="44" y2="476"/>
+      <!-- luces de fondo -->
+      <polygon class="beam" points="128,64 44,56 44,270"/>
+      <polygon class="beam" points="128,476 44,484 44,270"/>
+      <rect class="light" x="120" y="56" width="18" height="14" rx="2"/>
+      <rect class="light" x="120" y="470" width="18" height="14" rx="2"/>
+      <text class="sm" x="144" y="68">L3 fondo</text>
+      <text class="sm" x="144" y="482">L4 fondo</text>
+      <!-- luz principal -->
+      <polygon class="beam" points="374,49 486,191 240,270"/>
+      <g transform="rotate(51.7 430 120)">
+        <rect class="soft" x="340" y="108" width="180" height="24" rx="3"/>
+      </g>
+      <text class="lbl" x="470" y="78">L1 PRINCIPAL</text>
+      <text class="sm" x="470" y="92">COB 150–200 W · octa 90 cm</text>
+      <text class="sm" x="470" y="105">a 1,2 m · altura 2,0 m · 45°</text>
+      <!-- relleno -->
+      <polygon class="beam" points="402,383 478,477 240,270"/>
+      <g transform="rotate(-51.3 440 430)">
+        <rect class="soft" x="380" y="420" width="120" height="20" rx="3"/>
+      </g>
+      <text class="lbl" x="300" y="512">L2 RELLENO</text>
+      <text class="sm" x="300" y="526">60–100 W · softbox 60×90 · −2 pasos</text>
+      <!-- marca modelo -->
+      <line class="tape" x1="226" y1="256" x2="254" y2="284"/>
+      <line class="tape" x1="254" y1="256" x2="226" y2="284"/>
+      <text class="lbl" x="196" y="308">MODELO</text>
+      <text class="sm" x="174" y="322">X de cinta · 1,0 m del fondo</text>
+      <!-- cámara -->
+      <polygon class="cam" points="640,256 656,284 624,284"/>
+      <line class="tape" x1="616" y1="294" x2="664" y2="294"/>
+      <text class="lbl" x="586" y="232">CÁMARA</text>
+      <text class="sm" x="560" y="246">trípode · altura lente 1,0 m</text>
+      <!-- cota modelo-cámara -->
+      <line class="dim" x1="240" y1="350" x2="640" y2="350"/>
+      <line class="dim" x1="240" y1="344" x2="240" y2="356"/><line class="dim" x1="640" y1="344" x2="640" y2="356"/>
+      <text class="sm" x="420" y="344" text-anchor="middle">2,00 m</text>
+      <line class="dim" x1="44" y1="380" x2="240" y2="380"/>
+      <line class="dim" x1="44" y1="374" x2="44" y2="386"/><line class="dim" x1="240" y1="374" x2="240" y2="386"/>
+      <text class="sm" x="142" y="374" text-anchor="middle">1,00 m</text>
+      <!-- mobiliario -->
+      <rect class="furn" x="610" y="48" width="120" height="78" rx="3"/>
+      <text class="sm" x="618" y="82">notebook en</text>
+      <text class="sm" x="618" y="95">carro: revisión</text>
+      <text class="sm" x="618" y="108">en vivo</text>
+      <rect class="furn" x="540" y="440" width="190" height="44" rx="3"/>
+      <text class="sm" x="550" y="466">perchero ordenado por SKU + vaporizador</text>
+      <!-- puerta supuesta -->
+      <path class="door" d="M740 330 A80 80 0 0 0 660 410 L740 410"/>
+      <text class="sm" x="666" y="428" >puerta (supuesta)</text>
+      <!-- muros -->
+      <rect class="room" x="40" y="40" width="700" height="460"/>
+      <!-- cotas sala -->
+      <line class="dim" x1="40" y1="540" x2="740" y2="540"/>
+      <line class="dim" x1="40" y1="534" x2="40" y2="546"/><line class="dim" x1="740" y1="534" x2="740" y2="546"/>
+      <text class="lbl" x="390" y="556" text-anchor="middle">3,50 m</text>
+      <line class="dim" x1="762" y1="40" x2="762" y2="500"/>
+      <line class="dim" x1="756" y1="40" x2="768" y2="40"/><line class="dim" x1="756" y1="500" x2="768" y2="500"/>
+      <text class="lbl" transform="translate(776 270) rotate(90)" text-anchor="middle">2,30 m</text>
+      <text class="sm" x="40" y="26">PLANTA · escala 1 cm = 2 px · fondo a la izquierda</text>
+    </svg>
+    <figcaption>Amarillo: marcas de cinta gaffer en el piso. Azul punteado: campo de visión de la cámara en vertical. La puerta es un supuesto; si está en otro muro, el perchero y el notebook se mueven hacia el lado libre, el resto no cambia.</figcaption>
+  </figure>
+
+  <div class="grid2">
+    <figure class="plan" style="margin:0">
+      <svg viewBox="0 0 640 470" role="img" aria-label="Corte lateral: papel desde el techo, luz principal alta, cámara a la altura de la cintura">
+        <line class="dim" x1="40" y1="40" x2="600" y2="40"/>
+        <text class="sm" x="430" y="34">techo ~2,40 m (supuesto)</text>
+        <line class="room" x1="40" y1="424" x2="600" y2="424"/>
+        <line class="room" x1="40" y1="40" x2="40" y2="424"/>
+        <path class="paper" d="M44 48 L52 48 L52 380 Q52 418 96 418 L280 418 L280 424 L44 424 Z"/>
+        <rect class="roll" x="40" y="44" width="16" height="10"/>
+        <text class="sm" x="62" y="60">rodillo con cadena a 2,35 m</text>
+        <!-- modelo -->
+        <circle class="body" cx="200" cy="176" r="13"/>
+        <rect class="body" x="186" y="192" width="28" height="232" rx="10"/>
+        <text class="sm" x="166" y="160">1,65 m</text>
+        <!-- encuadre vertical -->
+        <line class="fov" x1="520" y1="264" x2="200" y2="99"/>
+        <line class="fov" x1="520" y1="264" x2="200" y2="424"/>
+        <text class="sm" x="232" y="96">encuadre: ~2,0 m de alto</text>
+        <!-- luz principal -->
+        <line class="dim" x1="352" y1="100" x2="352" y2="424"/>
+        <polygon class="beam" points="340,82 364,118 210,250"/>
+        <g transform="rotate(-56 352 100)"><rect class="soft" x="322" y="94" width="60" height="12" rx="2"/></g>
+        <text class="sm" x="366" y="92">L1 a 2,0 m, inclinada 25°</text>
+        <!-- luz fondo -->
+        <rect class="light" x="96" y="330" width="14" height="10"/>
+        <line class="dim" x1="103" y1="340" x2="103" y2="424"/>
+        <text class="sm" x="114" y="336">L3/L4 a 1,2 m</text>
+        <!-- cámara -->
+        <polygon class="cam" points="520,252 534,276 506,276"/>
+        <line class="dim" x1="520" y1="276" x2="496" y2="424"/>
+        <line class="dim" x1="520" y1="276" x2="544" y2="424"/>
+        <text class="sm" x="540" y="262">lente a 1,0 m</text>
+        <text class="sm" x="40" y="452">CORTE LATERAL · escala 1 cm = 1,6 px</text>
+      </svg>
+      <figcaption>La cámara va a la altura de la cintura y nivelada. Si se inclina hacia abajo desde la altura de los ojos, las piernas salen más cortas.</figcaption>
+    </figure>
+
+    <figure class="plan" style="margin:0">
+      <svg viewBox="0 0 400 470" role="img" aria-label="Modo prenda plana: superficie en el piso con cuatro marcadores, cámara cenital a 1,4 metros">
+        <rect class="paper" x="70" y="50" width="260" height="340" rx="2"/>
+        <!-- marcadores -->
+        <g>
+          <rect class="ink" x="78" y="58" width="34" height="34"/><rect class="bg" x="85" y="65" width="9" height="9"/><rect class="bg" x="96" y="76" width="9" height="9"/>
+          <rect class="ink" x="288" y="58" width="34" height="34"/><rect class="bg" x="295" y="76" width="9" height="9"/><rect class="bg" x="306" y="65" width="9" height="9"/>
+          <rect class="ink" x="78" y="348" width="34" height="34"/><rect class="bg" x="85" y="355" width="20" height="9"/>
+          <rect class="ink" x="288" y="348" width="34" height="34"/><rect class="bg" x="295" y="355" width="9" height="20"/>
+        </g>
+        <!-- polera -->
+        <path class="body" d="M160 110 L130 122 L104 168 L132 184 L148 160 L150 330 L250 330 L252 160 L268 184 L296 168 L270 122 L240 110 Q200 132 160 110 Z"/>
+        <line class="tape" x1="150" y1="176" x2="250" y2="176" style="stroke-width:2"/>
+        <text class="sm" x="200" y="200" text-anchor="middle" style="fill:var(--bg)">ancho pecho</text>
+        <line class="tape" x1="262" y1="114" x2="262" y2="330" style="stroke-width:2"/>
+        <text class="sm" x="200" y="420" text-anchor="middle">superficie 1,2 × 1,6 m · 4 marcadores en las esquinas</text>
+        <text class="sm" x="200" y="436" text-anchor="middle">cámara cenital a 1,4 m sobre el centro, sin inclinación</text>
+        <circle cx="200" cy="220" r="10" class="cam" opacity=".85"/>
+        <text class="sm" x="200" y="30" text-anchor="middle">MODO B · vista desde arriba</text>
+      </svg>
+      <figcaption>Se arma sobre el mismo piso vinílico, con el trípode y su columna horizontal. Los marcadores dan la escala exacta en centímetros, así las medidas salen solas.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ EQUIPO ============ -->
+<section>
+  <div class="read">
+    <div class="eyebrow">02 · Equipamiento</div>
+    <h2>Qué comprar</h2>
+    <p>Todo apunta a ahorrar tiempo: fondo que se baja con una cadena, luz continua (se ve lo que sale antes de disparar), un trípode que sirve para los dos modos y un vaporizador para no planchar.</p>
+  </div>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Ítem</th><th>Especificación</th><th class="n">CLP aprox.</th></tr></thead>
+      <tbody>
+        <tr class="group"><td colspan="3">Fondo y piso</td></tr>
+        <tr><td>Papel continuo</td><td>2,18 × 11 m, gris claro mate. Blanco puro solo si se acepta más trabajo de luz</td><td class="n">75–95 mil</td></tr>
+        <tr><td>Sistema de rodillos</td><td>Montaje a muro o techo, 2 rodillos con cadena (gris + blanco a futuro)</td><td class="n">60–100 mil</td></tr>
+        <tr><td>Piso vinílico</td><td>PVC mate gris claro, ~1,2 × 1,5 m, sobre el papel para pisarlo sin romperlo</td><td class="n">30–50 mil</td></tr>
+        <tr class="group"><td colspan="3">Luz (todo a 5.600 K, CRI ≥ 95)</td></tr>
+        <tr><td>L1 principal</td><td>LED COB 150–200 W, montura Bowens, con pie</td><td class="n">230–320 mil</td></tr>
+        <tr><td>Modificador L1</td><td>Octabox o parabólico 90 cm, con difusor y grilla</td><td class="n">45–80 mil</td></tr>
+        <tr><td>L2 relleno</td><td>LED COB 60–100 W + softbox 60 × 90 cm, con pie</td><td class="n">110–160 mil</td></tr>
+        <tr><td>L3 y L4 fondo</td><td>2 paneles o tubos LED regulables, con pies bajos</td><td class="n">80–140 mil</td></tr>
+        <tr><td>Sacos de arena ×4</td><td>Para los pies de luz: en una pieza chica se pasan a llevar</td><td class="n">15–25 mil</td></tr>
+        <tr class="group"><td colspan="3">Cámara y control</td></tr>
+        <tr><td>Trípode con columna horizontal</td><td>Altura ≥ 1,6 m; la columna gira 90° para el modo cenital</td><td class="n">80–130 mil</td></tr>
+        <tr><td>Tarjeta gris + carta de color</td><td>Referencia de color para corregir todas las fotos igual</td><td class="n">25–60 mil</td></tr>
+        <tr class="group"><td colspan="3">Prendas</td></tr>
+        <tr><td>Vaporizador vertical</td><td>De pie, con colgador</td><td class="n">35–60 mil</td></tr>
+        <tr><td>Perchero y kit de set</td><td>Perchas iguales, pinzas, alfileres, rodillo quita pelusa, cinta gaffer</td><td class="n">35–50 mil</td></tr>
+        <tr><td>Rebotadores</td><td>2 planchas de foam 1 × 2 m (una cara blanca, otra negra)</td><td class="n">20–30 mil</td></tr>
+        <tr><td>Marcadores de medida</td><td>4 marcadores impresos y plastificados (te los preparo yo)</td><td class="n">5–10 mil</td></tr>
+        <tr class="total"><td colspan="2">Total</td><td class="n">≈ 0,85–1,3 M</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note read">Precios de referencia de memoria, sin cotizar: verificar al comprar. Eligiendo gama media en todo, el total queda cerca de 1 M. No incluye cámara: se usa la de quien fotografía o un celular reciente. Si quieren una cámara propia, una mirrorless usada con lente de 35 mm equivalente suma unos 450–700 mil.</p>
+</section>
+
+<!-- ============ GUÍA FOTÓGRAFO ============ -->
+<section>
+  <div class="read">
+    <div class="eyebrow">03 · Para quien fotografía</div>
+    <h2>Configuración fija</h2>
+    <p>La regla principal: <strong>no cambiar nada entre prendas</strong>. Mismas luces, misma distancia, misma altura, mismo zoom. Esa consistencia es la que permite que yo procese todo en lote y que el catálogo se vea parejo.</p>
+  </div>
+  <div class="settings">
+    <div class="card">
+      <h3>Con cámara</h3>
+      <dl>
+        <dt>Modo</dt><dd>Manual (M)</dd>
+        <dt>Lente</dt><dd>35 mm equivalente (24 mm en APS-C). Sin zoom entre tomas</dd>
+        <dt>Apertura</dt><dd>f/5.6 a f/8</dd>
+        <dt>Velocidad</dt><dd>1/200 s (congela movimiento)</dd>
+        <dt>ISO</dt><dd>El mínimo que dé buena exposición, máx. 800</dd>
+        <dt>Balance</dt><dd>Fijo en 5.600 K o personalizado con la tarjeta gris</dd>
+        <dt>Archivo</dt><dd>RAW + JPG, máxima resolución</dd>
+        <dt>Foco</dt><dd>AF continuo con detección de ojos; en detalles, foco en la tela</dd>
+        <dt>Conexión</dt><dd>Si se puede, con cable al notebook para revisar cada toma en grande</dd>
+      </dl>
+    </div>
+    <div class="card">
+      <h3>Con celular</h3>
+      <dl>
+        <dt>Lente</dt><dd>1x principal. Nunca el gran angular 0,5x</dd>
+        <dt>Modo</dt><dd>Pro / manual y RAW si el teléfono lo tiene</dd>
+        <dt>Balance</dt><dd>Fijo en 5.600 K</dd>
+        <dt>Exposición</dt><dd>ISO mínimo; bloquear exposición y foco (mantener presionado)</dd>
+        <dt>Formato</dt><dd>3:4 vertical, máxima resolución</dd>
+        <dt>Apagar</dt><dd>Modo retrato, filtros, belleza, HDR automático, flash</dd>
+        <dt>Disparo</dt><dd>Con control Bluetooth para no mover el teléfono</dd>
+        <dt>Altura</dt><dd>1,0 m, en el soporte del trípode, nivelado</dd>
+      </dl>
+    </div>
+    <div class="card">
+      <h3>Luces</h3>
+      <dl>
+        <dt>L1</dt><dd>45° al lado izquierdo de la modelo, a 1,2 m, alta (2,0 m) y apuntando al pecho</dd>
+        <dt>L2</dt><dd>Lado opuesto, 2 pasos por debajo de L1 (≈ ¼ de potencia)</dd>
+        <dt>L3/L4</dt><dd>Apuntan al papel, no a la modelo. El gris debe verse parejo de esquina a esquina</dd>
+        <dt>Prueba</dt><dd>Al inicio: foto del fondo vacío. Si hay esquinas oscuras, ajustar L3/L4</dd>
+        <dt>Otras luces</dt><dd>Ventanas tapadas y luz de techo apagada</dd>
+      </dl>
+      <p class="note" style="margin-top:10px">Anotar las potencias en una cinta pegada a cada luz. La próxima sesión parte de ahí.</p>
+    </div>
+  </div>
+
+  <div class="read">
+    <h3>Encuadre (lo que más me sirve después)</h3>
+    <ul class="list">
+      <li>Vertical siempre. La modelo centrada sobre la X de cinta.</li>
+      <li>Cuerpo entero con aire: unos 10–15 cm sobre la cabeza y bajo los pies. <strong>Nunca cortar pies, manos ni la prenda.</strong> Recortar es fácil; inventar lo que no salió, no.</li>
+      <li>El fondo tiene que llenar todo el cuadro. Si se ve el muro o el borde del papel, no usar el zoom: volver a poner el trípode sobre su marca.</li>
+      <li>Fotos nítidas por sobre fotos lindas: sin movimiento, ojos abiertos, prenda sin arrugas ni pelusas.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ SHOT LIST ============ -->
+<section>
+  <div class="read">
+    <div class="eyebrow">04 · Lista de tomas</div>
+    <h2>Por cada prenda, en este orden</h2>
+    <p>Cada prenda parte con una foto de su <strong>tarjeta SKU</strong> (código QR + SKU + talla, impresa). Con eso yo separo y nombro todas las fotos automáticamente; nadie tiene que renombrar archivos.</p>
+  </div>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>#</th><th>Toma</th><th>Cómo</th><th>Para qué</th></tr></thead>
+      <tbody>
+        <tr class="group"><td colspan="4">Modo B · prenda plana (primero, recién vaporizada)</td></tr>
+        <tr><td class="n">0</td><td>Tarjeta SKU</td><td>Tarjeta sobre la superficie, que se lea el QR</td><td>Ordenar archivos</td></tr>
+        <tr><td class="n">F1</td><td>Frente plano</td><td>Cenital, prenda extendida sin estirar, mangas en ángulo fijo, los 4 marcadores visibles</td><td>Tabla de medidas, referencia para IA</td></tr>
+        <tr><td class="n">F2</td><td>Espalda plana</td><td>Igual que F1, dada vuelta</td><td>Ficha, referencia para IA</td></tr>
+        <tr><td class="n">F3</td><td>Etiqueta</td><td>Primer plano de talla y composición</td><td>Descripción del producto</td></tr>
+        <tr class="group"><td colspan="4">Modo A · con modelo</td></tr>
+        <tr><td class="n">0</td><td>Tarjeta SKU</td><td>La modelo la sostiene frente al pecho</td><td>Ordenar archivos</td></tr>
+        <tr><td class="n">M1</td><td>Frente, cuerpo entero</td><td>Postura neutra, brazos sueltos sin tapar la prenda</td><td>Foto principal de la tienda</td></tr>
+        <tr><td class="n">M2</td><td>3/4</td><td>Girada 45° hacia L1</td><td>Volumen y calce</td></tr>
+        <tr><td class="n">M3</td><td>Perfil</td><td>90°, de lado</td><td>Largo y caída</td></tr>
+        <tr><td class="n">M4</td><td>Espalda</td><td>De espaldas, pelo recogido si tapa</td><td>Espalda de la prenda</td></tr>
+        <tr><td class="n">M5</td><td>Medio cuerpo</td><td>Cámara a la altura del pecho; de cintura hacia arriba (o hacia abajo en pantalones y faldas)</td><td>Ajuste y detalle de corte</td></tr>
+        <tr><td class="n">M6</td><td>Movimiento</td><td>Ráfaga de un paso o un giro, 3–5 fotos</td><td>Redes y portada; base para video con IA</td></tr>
+        <tr><td class="n">M7</td><td>Detalle</td><td>A 30–50 cm: tela, botones, cierre, bordado</td><td>Textura real</td></tr>
+        <tr><td class="n">V1</td><td>Video</td><td>8–10 s vertical, 4K 30 fps: caminar hacia cámara y un giro lento</td><td>Reels, TikTok y animaciones</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3><span class="tag">una vez</span>Set de referencia de la modelo</h3>
+      <p>Una sola vez, con ropa neutra ajustada (negro), para que la IA mantenga tu cara y cuerpo consistentes en contenido generado:</p>
+      <ul class="list">
+        <li>Rostro: frente, 3/4 y perfil; neutra y sonriendo; pelo suelto y recogido.</li>
+        <li>Cuerpo entero: frente, 3/4, perfil y espalda.</li>
+        <li>Misma luz del set. Sin maquillaje fuerte ni accesorios.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="tag">cada sesión</span>Control de color</h3>
+      <ul class="list">
+        <li>Primera foto del día: la modelo sostiene la tarjeta gris y la carta de color en la X.</li>
+        <li>Repetir cada vez que se mueva o cambie una luz.</li>
+        <li>Con eso corrijo el color de todas las fotos de una vez, y la prenda se ve como es en persona.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FLUJO ============ -->
+<section>
+  <div class="read">
+    <div class="eyebrow">05 · Flujo de sesión</div>
+    <h2>Trabajar por lotes</h2>
+    <p>El tiempo se pierde cambiando de tarea. Se hace cada cosa para todas las prendas antes de pasar a la siguiente.</p>
+    <ol class="steps">
+      <li><strong>Antes (día previo):</strong> imprimir tarjetas SKU, colgar las prendas en el perchero en orden, revisar baterías y tarjetas de memoria.</li>
+      <li><strong>Vaporizar todo</strong> y pasar el rodillo quita pelusa.</li>
+      <li><strong>Prueba de luz:</strong> fondo vacío + tarjeta gris. Revisar en el notebook.</li>
+      <li><strong>Modo B para todas las prendas:</strong> tarjeta, F1, F2, F3.</li>
+      <li><strong>Modo A agrupado por tipo de prenda:</strong> primero todas las poleras, luego pantalones, etc. Menos cambios de peinado y calzado.</li>
+      <li><strong>Videos V1</strong> al final, aprovechando la última tanda.</li>
+      <li><strong>Entrega:</strong> copiar la tarjeta de memoria completa, sin editar ni borrar.</li>
+    </ol>
+    <p class="note">Estimado: unos 10 minutos por prenda con el set ya armado, o sea 20–25 prendas en media jornada. Depende de los cambios de ropa.</p>
+  </div>
+
+  <div class="never">
+    <h3>Lo que arruina la postproducción</h3>
+    <ul class="list">
+      <li>Mover el trípode o las luces entre prendas.</li>
+      <li>Cambiar el zoom o pasar al gran angular.</li>
+      <li>Usar el modo retrato, filtros o "belleza" del celular.</li>
+      <li>Cortar pies, manos o la prenda en el encuadre.</li>
+      <li>Editar, recortar o comprimir antes de entregar (por ejemplo, mandar por WhatsApp).</li>
+      <li>Olvidar la tarjeta SKU al empezar una prenda.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ ENTREGA ============ -->
+<section>
+  <div class="read">
+    <div class="eyebrow">06 · Después de la sesión</div>
+    <h2>Entrega y lo que pasa con las fotos</h2>
+    <p>Una carpeta por sesión con el nombre <span class="code">2026-11-21_sesion</span> y adentro los archivos originales tal como salieron de la cámara (RAW + JPG, videos). Se sube a Drive o donde acuerden, sin pasar por apps de mensajería.</p>
+  </div>
+  <div class="who">
+    <div class="card">
+      <h3>Lo que hago yo (Claude)</h3>
+      <ul class="list">
+        <li>Leer los QR y ordenar las fotos por SKU y vista (M1, F1…).</li>
+        <li>Descartar movidas o con ojos cerrados y proponerte las mejores.</li>
+        <li>Corregir color con la tarjeta gris y emparejar el fondo.</li>
+        <li>Exportar los formatos: 4:5 y 1:1 para la tienda, 9:16 para historias.</li>
+        <li>Medir F1 con los marcadores y armar la tabla de medidas por talla.</li>
+        <li>Redactar descripciones desde la etiqueta y las fotos.</li>
+        <li>Subir productos, fotos y medidas a la tienda en Jumpseller.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Lo que hace Higgsfield</h3>
+      <ul class="list">
+        <li>Aumentar resolución y nitidez (upscale).</li>
+        <li>Reencuadrar o extender el fondo a formatos verticales y banners.</li>
+        <li>Quitar fondo para fondos de campaña o temporada.</li>
+        <li>Animar las fotos M1/M6 en videos cortos para redes.</li>
+        <li>Generar piezas de anuncio y escenas a partir de F1/F2 y del set de referencia.</li>
+      </ul>
+      <p class="note" style="margin-top:10px">Todo esto funciona mejor con fotos nítidas, con aire alrededor y de color correcto. Por eso las reglas de encuadre y la tarjeta gris importan más que la cámara.</p>
+    </div>
+  </div>
+</section>
+
+<footer>Supuestos: techo ~2,40 m, puerta en el muro corto opuesto al fondo, modelo de ~1,65 m. Si algo de esto no coincide, el plano se ajusta.</footer>
+</div>
