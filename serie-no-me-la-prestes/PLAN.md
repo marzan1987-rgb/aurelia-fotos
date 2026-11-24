@@ -40,3 +40,13 @@
 6. Cierre: "Etiqueta a quien te pidió ropa 'solo por un ratito' y participa por una Gift Card de $15.000".
 
 Los capítulos 2 a 6 siguen el guion aprobado en la conversación.
+
+## Voz en off
+- **Voces aprobadas:** las tomas **G** e **I**, hechas con la voz clonada "Voz Aurelia" (Seed Audio), con tus grabaciones como referencia de acento y el texto en español natural.
+- **Descartadas:** la toma H, por exceso de chilenismos.
+- **Regla:** acento y entonación chilenos, sin exagerar el chilenismo en el texto.
+- Los audios están en `voz/`, que no se sube al repositorio.
+
+## Referencias de la protagonista
+- **Usar solo fotos reales de estudio, sin fondo,** subidas a Higgsfield: 821fd108 (Renata), 4f34cb87, acb12277, 18f4e1cc y 4cc78cf0 (Colomba).
+- **No usar** las fotos del parque de las fichas del Renata y del Inés: son montajes generados, no sirven para el parecido.
