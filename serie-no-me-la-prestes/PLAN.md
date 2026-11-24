@@ -33,9 +33,10 @@
 
 ### Capítulo 1 · "La desaparición" (1 dic)
 1. Clóset abierto con un colgador vacío y la etiqueta Aurelia; la cámara se acerca lento. Texto: "Caso N°1: Blusa Colomba".
-2. Flashback cálido: la Cata en la puerta con la Colomba en la mano. Voz: "30 de noviembre. Mi hermana me la pidió 'solo para un asado'."
-3. Una historia en el celular: la Cata en el asado con la Colomba puesta. Voz: "Eso fue hace 48 horas."
-4. La protagonista frente al clóset, seria, mirando a cámara. Texto: "Unidad Aurelia: caso abierto 🔍".
-5. Cierre: "Etiqueta a quien te pidió ropa 'solo por un ratito' y participa por una Gift Card de $15.000".
+2. Flashback cálido: la Cata en la puerta con la Colomba en la mano. Voz: "30 de noviembre. Mi hermana me la pidió 'solo para el asado de fin de año de la pega'."
+3. Una historia en el celular: la Cata en el asado de fin de año de la pega, con calor de verano, la Colomba, un palazzo de jeans liviano y chalitas. Voz: "Eso fue hace 48 horas."
+4. El amigo secreto en el mismo asado: la Cata abre su regalo y saca una Gift Card de Aurelia de $30.000. Voz: "…y encima en el amigo secreto le tocó una Gift Card de Aurelia."
+5. La protagonista frente al clóset, seria, mirando a cámara. Texto: "Unidad Aurelia: caso abierto 🔍".
+6. Cierre: "Etiqueta a quien te pidió ropa 'solo por un ratito' y participa por una Gift Card de $15.000".
 
 Los capítulos 2 a 6 siguen el guion aprobado en la conversación.
