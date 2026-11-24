@@ -1,8 +1,8 @@
 """Textos de pantalla de la serie con el manual de marca Aurelia (aproximación).
 
 Manual: Halimun (logo) · Brandon Grotesque Light · Open Sans Regular.
-Aquí: logo real vectorizado · Montserrat Light (en lugar de Brandon) ·
-Open Sans (oficial) · Sacramento (en lugar de Halimun, solo acentos).
+Aquí: logo real vectorizado · Halimun (oficial; los signos ¿ ? que no trae se
+toman de Sacramento) · Coves Light (alternativa gratis a Brandon) · Open Sans.
 Colores: primario coral #E74152 · secundarios #F10159, #C21C8B, #913C78.
 Rectángulos de texto en morado #913C78 (mejor contraste con blanco, 6,7:1).
 
@@ -21,42 +21,110 @@ MAGENTA = (194, 28, 139)   # secundario #C21C8B
 MORADO = (145, 60, 120)    # secundario #913C78
 W, H = 1080, 1920
 
-LIGHT = os.path.join(AQUI, "Montserrat-Light.ttf")       # ≈ Brandon Grotesque Light
+LIGHT = os.path.join(AQUI, "Coves-Light.otf")            # ≈ Brandon Grotesque Light
 TEXTO = os.path.join(AQUI, "OpenSans-Regular.ttf")       # oficial
 TEXTO_B = os.path.join(AQUI, "OpenSans-SemiBold.ttf")
-SCRIPT = os.path.join(AQUI, "Sacramento.ttf")            # ≈ Halimun (solo acentos)
+SCRIPT = os.path.join(AQUI, "Halimun.ttf")               # oficial del manual
+RESPALDO = {SCRIPT: os.path.join(AQUI, "Sacramento.ttf")}  # para glifos que falten
 LOGO = os.path.join(AQUI, "logo_aurelia_blanco.png")     # logo real
 LOGO_CORTE_TIENDA = 292   # filas 0-291: "Aurelia"; 372-456: "TIENDA"
 
 
-def _ancho(t, f, tr):
-    return sum(f.getlength(c) for c in t) + tr * max(0, len(t) - 1)
+_CMAPS = {}
 
 
-def _escribir(d, x, y, t, f, tr, color):
+def _tiene(ruta, c):
+    if ruta not in _CMAPS:
+        from fontTools.ttLib import TTFont
+        _CMAPS[ruta] = set(TTFont(ruta).getBestCmap())
+    return c == " " or ord(c) in _CMAPS[ruta]
+
+
+def _tramos(t, ruta, tam):
+    """Divide el texto en tramos por fuente: la principal o la de respaldo si falta el glifo."""
+    principal = ImageFont.truetype(ruta, tam)
+    resp = RESPALDO.get(ruta)
+    fr = ImageFont.truetype(resp, tam) if resp else None
+    out = []
     for c in t:
-        d.text((x, y), c, font=f, fill=color)
-        x += f.getlength(c) + tr
+        f = principal if (fr is None or _tiene(ruta, c)) else fr
+        if out and out[-1][1] is f:
+            out[-1][0] += c
+        else:
+            out.append([c, f])
+    return out
+
+
+def _ancho(t, ruta, tam, tr):
+    if tr:
+        return sum(f.getlength(c) for txt, f in _tramos(t, ruta, tam) for c in txt) + tr * max(0, len(t) - 1)
+    return sum(f.getlength(txt) for txt, f in _tramos(t, ruta, tam))
+
+
+# Halimun no trae tildes ni ñ: dibuja la letra base. Se agrega el signo a mano.
+SIN_TILDE = {"á": "a", "é": "e", "í": "i", "ó": "o", "ú": "u", "ñ": "n",
+             "Á": "A", "É": "E", "Í": "I", "Ó": "O", "Ú": "U", "Ñ": "N"}
+
+
+def _signo(d, f, x, y, base, c, tam, color):
+    """Dibuja tilde (o virgulilla de la ñ) sobre la letra base ya dibujada en (x, y).
+    Se mide con la altura real de la letra, porque Halimun tiene una altura x muy baja."""
+    l, t, r, b = f.getbbox(base)
+    alto = b - t
+    cx = x + (l + r) / 2 - alto * 0.55
+    top = y + t - alto * 0.22
+    g = max(4, int(round(alto * 0.16)))
+    if c in "ñÑ":
+        pts = [(cx - alto * 0.35 + i * alto * 0.07, top - alto * (0.12 if i % 2 else 0.0)) for i in range(11)]
+        d.line(pts, fill=color, width=g, joint="curve")
+    else:
+        p0, p1 = (cx - alto * 0.18, top), (cx + alto * 0.32, top - alto * 0.80)
+        d.line([p0, p1], fill=color, width=g)
+        for px, py in (p0, p1):  # puntas redondeadas como el trazo de la manuscrita
+            d.ellipse([px - g / 2, py - g / 2, px + g / 2, py + g / 2], fill=color)
+
+
+def _escribir(d, x, y, t, ruta, tam, tr, color):
+    for txt, f in _tramos(t, ruta, tam):
+        if ruta == SCRIPT and not tr and any(c in SIN_TILDE for c in txt) and f.path == SCRIPT:
+            plano = "".join(SIN_TILDE.get(c, c) for c in txt)
+            d.text((x, y), plano, font=f, fill=color)
+            for i, c in enumerate(txt):
+                if c in SIN_TILDE:
+                    _signo(d, f, x + f.getlength(plano[:i]), y, SIN_TILDE[c], c, tam, color)
+            x += f.getlength(plano)
+            continue
+        if tr:
+            for c in txt:
+                d.text((x, y), c, font=f, fill=color)
+                x += f.getlength(c) + tr
+        else:  # sin espaciado: se dibuja el tramo entero para conservar las uniones de la manuscrita
+            d.text((x, y), txt, font=f, fill=color)
+            x += f.getlength(txt)
 
 
 def bloque(lineas, y_centro, tam=48, fuente=TEXTO, tracking=0, caja=MORADO, color="white",
-           interlinea=1.4, mayus=False, alfa_caja=235):
-    """Líneas centradas; con caja = rectángulo de color secundario (uso correcto del manual)."""
+           interlinea=1.4, mayus=False, alfa_caja=235, max_ancho=W - 140):
+    """Líneas centradas; con caja = rectángulo de color secundario (uso correcto del manual).
+    Si alguna línea no cabe en max_ancho, el tamaño se reduce hasta que quepa."""
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
-    f = ImageFont.truetype(fuente, tam)
     lineas = [l.upper() if mayus else l for l in lineas]
+    rel_tr = tracking / tam if tam else 0
+    while tam > 12 and max(_ancho(l, fuente, tam, rel_tr * tam) for l in lineas) > max_ancho - (96 if caja else 0):
+        tam -= 2
+    tracking = rel_tr * tam
     alto = tam * interlinea
     total = alto * len(lineas)
     y0 = y_centro - total / 2
-    anchos = [_ancho(l, f, tracking) for l in lineas]
+    anchos = [_ancho(l, fuente, tam, tracking) for l in lineas]
     if caja:
         px, py = 48, 34
         bw = max(anchos) + 2 * px
         d.rectangle([(W - bw) / 2, y0 - py, (W + bw) / 2, y0 + total + py - tam * 0.3],
                     fill=caja + (alfa_caja,))
     for i, l in enumerate(lineas):
-        _escribir(d, (W - anchos[i]) / 2, y0 + i * alto, l, f, tracking, color)
+        _escribir(d, (W - anchos[i]) / 2, y0 + i * alto, l, fuente, tam, tracking, color)
     return img
 
 
