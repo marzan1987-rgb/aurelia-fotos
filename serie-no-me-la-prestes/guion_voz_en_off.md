@@ -16,9 +16,9 @@
 
 ---
 
-## Capítulo 1 · "La desaparición" · 1 de diciembre (26 s aprox.)
+## Capítulo 1 · "La desaparición" · 1 de diciembre (27 s aprox.)
 
-**Audio ya generado y aprobado:** la toma **G** o la toma **I**, que traen este texto completo (entre 18 y 19 s).
+**Audio:** hay que regenerarlo con la frase nueva del cuadro 6, usando la misma configuración que la toma aprobada (G o I). Cuesta unos 2 créditos.
 
 | # | Tiempo | Imagen | Voz |
 |---|---|---|---|
@@ -27,16 +27,16 @@
 | 3 | 4–7 s | Clóset con el colgador vacío · "CASO N°1 · BLUSA COLOMBA" | *"Bueno, técnicamente, me la pidieron prestada."* |
 | 4 | 7–11 s | **Flashback:** la Cata en la puerta con la Colomba | *"Treinta de noviembre. Mi hermana me pidió mi blusa Colomba, solo para el asado de fin de año de la pega."* |
 | 5 | 11–14,5 s | **Flashback:** el asado de la pega con Ramazzotti | *"Eso fue hace cuarenta y ocho horas."* |
-| 6 | 14,5–18,5 s | **Flashback:** el amigo secreto con la Gift Card | *"Y encima, en el amigo secreto, le tocó una Gift Card de Aurelia."* |
-| 7 | 18,5–22 s | **Tú (versión D)**, presente · "UNIDAD AURELIA · CASO ABIERTO" | *"Unidad Aurelia: caso abierto."* |
-| 8 | 22–26 s | Pantalla final: "¿Quién es tu ladrona de ropa?" y Gift Card de $15.000 | (música) Opcional: *"¿Quién es tu ladrona? Etiquétala y participa."* **(falta generarla: ~2 créditos)** |
+| 6 | 14,5–19,5 s | **Flashback:** el amigo secreto con la Gift Card | *"Menos mal su amigo secreto le regaló una Gift Card de Aurelia… ¡a ver si así me devuelve la mía!"* |
+| 7 | 19,5–23 s | **Tú (versión D)**, presente · "UNIDAD AURELIA · CASO ABIERTO" | *"Unidad Aurelia: caso abierto."* |
+| 8 | 23–27 s | Pantalla final: "¿Quién es tu ladrona de ropa?" y Gift Card de $15.000 | (música) Opcional: *"¿Quién es tu ladrona? Etiquétala y participa."* **(falta generarla: ~2 créditos)** |
 
 ### Texto corrido (para generar o grabar)
 > Me robaron.
 > Bueno, técnicamente, me la pidieron prestada.
 > Treinta de noviembre. Mi hermana me pidió mi blusa Colomba, solo para el asado de fin de año de la pega.
 > Eso fue hace cuarenta y ocho horas.
-> Y encima, en el amigo secreto, le tocó una Gift Card de Aurelia.
+> Menos mal su amigo secreto le regaló una Gift Card de Aurelia… ¡a ver si así me devuelve la mía!
 > Unidad Aurelia: caso abierto.
 
 ---
@@ -47,7 +47,7 @@
 | Animar tu escena (versión D) | Pendiente. Un solo clip de 5 s sirve para el inicio y el cierre. | 12,5 créditos (720p) |
 | Clips del clóset, la Cata, el asado y el amigo secreto | ✅ Ya animados | 0 |
 | Clip del adelanto (clóset de noche) | ✅ Ya animado | 0 |
-| Voz del capítulo 1 | ✅ Tomas G e I | 0 |
+| Voz del capítulo 1 | Regenerar con la frase nueva del cuadro 6 | ~2 créditos |
 | Voces opcionales del adelanto y del cierre | Por decidir | ~2 cada una |
 | Música y efectos de sonido | Por cotizar | Por definir |
 | Armado, textos, subtítulos y colores | Lo hago en mi máquina | 0 |
