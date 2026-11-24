@@ -200,3 +200,35 @@ def overlays(out):
 
 if __name__ == "__main__":
     overlays(sys.argv[1] if len(sys.argv) > 1 else "overlays")
+
+
+def tarjeta_titulo(subtitulo="Capítulo 1"):
+    """Tarjeta de título de la serie: fondo coral, trazos de la A, título en Halimun y logo."""
+    t = Image.new("RGBA", (W, H), CORAL + (255,))
+    trazos_A(t)
+    t.alpha_composite(bloque(["No me la prestes"], H * 0.40, tam=170, fuente=SCRIPT, caja=None, interlinea=1.1))
+    t.alpha_composite(titulo(["una serie de aurelia"], H * 0.50, tam=40, caja=None))
+    t.alpha_composite(titulo([subtitulo], H * 0.58, tam=58, caja=MORADO))
+    pegar_logo(t, 420, H * 0.74)
+    return t.convert("RGB")
+
+
+def cartel_inicio(texto="Santiago, 30 de noviembre"):
+    """Cartel negro de inicio del adelanto."""
+    c = Image.new("RGBA", (W, H), (0, 0, 0, 255))
+    c.alpha_composite(titulo([texto], H * 0.5, tam=46, caja=None))
+    return c.convert("RGB")
+
+
+def etiqueta_flashback():
+    """Etiqueta 'FLASHBACK' para las escenas del pasado."""
+    return titulo(["flashback"], H * 0.93, tam=40, caja=MORADO)
+
+
+def piezas_extra(out):
+    os.makedirs(out, exist_ok=True)
+    tarjeta_titulo("Capítulo 1").save(os.path.join(out, "titulo_cap1.png"))
+    tarjeta_titulo("1/12").save(os.path.join(out, "titulo_adelanto.png"))
+    cartel_inicio().save(os.path.join(out, "cartel_inicio.png"))
+    etiqueta_flashback().save(os.path.join(out, "flashback.png"))
+    bloque(["Me robaron."], H * 0.82, tam=64).save(os.path.join(out, "gancho.png"))
