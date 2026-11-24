@@ -67,6 +67,8 @@ tr:last-child td{border-bottom:0}
 td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;font-family:var(--f-mono);font-size:13px}
 tr.group td{font:700 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--tape-ink);background:var(--bg)}
 tr.total td{font-weight:700;border-top:2px solid var(--ink)}
+a{color:var(--cam);text-underline-offset:2px}
+a:focus-visible{outline:2px solid var(--tape);outline-offset:2px}
 .code{font-family:var(--f-mono);font-size:13px;background:var(--bg);padding:1px 5px;border-radius:3px}
 .settings{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px 18px;min-width:0}
@@ -112,7 +114,7 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
       <text class="sm" x="108" y="138">piso vinílico 1,2 × 1,5 m sobre el papel</text>
       <!-- rodillo -->
       <rect class="roll" x="40" y="52" width="9" height="436"/>
-      <text class="lbl" transform="translate(66 270) rotate(-90)" text-anchor="middle">PAPEL CONTINUO 2,18 m · gris claro</text>
+      <text class="lbl" transform="translate(66 270) rotate(-90)" text-anchor="middle">PAPEL 2 m · gris neutral · en barra de muro</text>
       <!-- campo de visión -->
       <line class="fov" x1="640" y1="270" x2="44" y2="64"/>
       <line class="fov" x1="640" y1="270" x2="44" y2="476"/>
@@ -121,15 +123,15 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
       <polygon class="beam" points="128,476 44,484 44,270"/>
       <rect class="light" x="120" y="56" width="18" height="14" rx="2"/>
       <rect class="light" x="120" y="470" width="18" height="14" rx="2"/>
-      <text class="sm" x="144" y="68">L3 fondo</text>
-      <text class="sm" x="144" y="482">L4 fondo</text>
+      <text class="sm" x="144" y="68">L3 fondo (2ª etapa)</text>
+      <text class="sm" x="144" y="482">L4 fondo (2ª etapa)</text>
       <!-- luz principal -->
       <polygon class="beam" points="374,49 486,191 240,270"/>
       <g transform="rotate(51.7 430 120)">
         <rect class="soft" x="340" y="108" width="180" height="24" rx="3"/>
       </g>
       <text class="lbl" x="470" y="78">L1 PRINCIPAL</text>
-      <text class="sm" x="470" y="92">COB 150–200 W · octa 90 cm</text>
+      <text class="sm" x="470" y="92">Ulanzi LC150BI · octa 90 cm</text>
       <text class="sm" x="470" y="105">a 1,2 m · altura 2,0 m · 45°</text>
       <!-- relleno -->
       <polygon class="beam" points="402,383 478,477 240,270"/>
@@ -137,7 +139,7 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
         <rect class="soft" x="380" y="420" width="120" height="20" rx="3"/>
       </g>
       <text class="lbl" x="300" y="512">L2 RELLENO</text>
-      <text class="sm" x="300" y="526">60–100 W · softbox 60×90 · −2 pasos</text>
+      <text class="sm" x="300" y="526">Godox SL-60W · softbox 60×90 · −2 pasos</text>
       <!-- marca modelo -->
       <line class="tape" x1="226" y1="256" x2="254" y2="284"/>
       <line class="tape" x1="254" y1="256" x2="226" y2="284"/>
@@ -188,7 +190,7 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
         <line class="room" x1="40" y1="40" x2="40" y2="424"/>
         <path class="paper" d="M44 48 L52 48 L52 380 Q52 418 96 418 L280 418 L280 424 L44 424 Z"/>
         <rect class="roll" x="40" y="44" width="16" height="10"/>
-        <text class="sm" x="62" y="60">rodillo con cadena a 2,35 m</text>
+        <text class="sm" x="62" y="60">barra de cortina a 2,30 m</text>
         <!-- modelo -->
         <circle class="body" cx="200" cy="176" r="13"/>
         <rect class="body" x="186" y="192" width="28" height="232" rx="10"/>
@@ -205,7 +207,7 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
         <!-- luz fondo -->
         <rect class="light" x="96" y="330" width="14" height="10"/>
         <line class="dim" x1="103" y1="340" x2="103" y2="424"/>
-        <text class="sm" x="114" y="336">L3/L4 a 1,2 m</text>
+        <text class="sm" x="114" y="336">L3/L4 (2ª etapa)</text>
         <!-- cámara -->
         <polygon class="cam" points="520,252 534,276 506,276"/>
         <line class="dim" x1="520" y1="276" x2="496" y2="424"/>
@@ -246,35 +248,39 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
   <div class="read">
     <div class="eyebrow">02 · Equipamiento</div>
     <h2>Qué comprar</h2>
-    <p>Todo apunta a ahorrar tiempo: fondo que se baja con una cadena, luz continua (se ve lo que sale antes de disparar), un trípode que sirve para los dos modos y un vaporizador para no planchar.</p>
+    <p>Todo se compra en tiendas chilenas y se arma sin herramientas especiales: el fondo cuelga de una barra de cortina atornillada al muro, las luces van en pies y la mayor parte sale de una sola tienda (Fotosimple). Disponibilidad y precios según lo publicado por cada tienda al 24-11-2026: confirmar stock en el carrito antes de pagar.</p>
   </div>
   <div class="tbl">
     <table>
-      <thead><tr><th>Ítem</th><th>Especificación</th><th class="n">CLP aprox.</th></tr></thead>
+      <thead><tr><th>Ítem</th><th>Producto y dónde comprar</th><th class="n">CLP publicado</th></tr></thead>
       <tbody>
         <tr class="group"><td colspan="3">Fondo y piso</td></tr>
-        <tr><td>Papel continuo</td><td>2,18 × 11 m, gris claro mate. Blanco puro solo si se acepta más trabajo de luz</td><td class="n">75–95 mil</td></tr>
-        <tr><td>Sistema de rodillos</td><td>Montaje a muro o techo, 2 rodillos con cadena (gris + blanco a futuro)</td><td class="n">60–100 mil</td></tr>
-        <tr><td>Piso vinílico</td><td>PVC mate gris claro, ~1,2 × 1,5 m, sobre el papel para pisarlo sin romperlo</td><td class="n">30–50 mil</td></tr>
-        <tr class="group"><td colspan="3">Luz (todo a 5.600 K, CRI ≥ 95)</td></tr>
-        <tr><td>L1 principal</td><td>LED COB 150–200 W, montura Bowens, con pie</td><td class="n">230–320 mil</td></tr>
-        <tr><td>Modificador L1</td><td>Octabox o parabólico 90 cm, con difusor y grilla</td><td class="n">45–80 mil</td></tr>
-        <tr><td>L2 relleno</td><td>LED COB 60–100 W + softbox 60 × 90 cm, con pie</td><td class="n">110–160 mil</td></tr>
-        <tr><td>L3 y L4 fondo</td><td>2 paneles o tubos LED regulables, con pies bajos</td><td class="n">80–140 mil</td></tr>
-        <tr><td>Sacos de arena ×4</td><td>Para los pies de luz: en una pieza chica se pasan a llevar</td><td class="n">15–25 mil</td></tr>
+        <tr><td>Fondo ×2</td><td><a href="https://fotosimple.cl/store/producto/fondo-papel-fotografia-2-x-5-metros-color-gris-04/">Fondo papel 2 × 5 m Gris Neutral (04)</a> · Fotosimple. Uno en uso y uno de repuesto</td><td class="n">2 × 34.990</td></tr>
+        <tr><td>Barra de muro</td><td><a href="https://www.sodimac.cl/sodimac-cl/lista/CATG10111/Barras-para-Cortina">Set barra de cortina simple extensible 210–300 cm, muro, fierro</a> · Sodimac. Se ajusta a ~2,2 m y pasa por el tubo del papel</td><td class="n">≈ 21.490</td></tr>
+        <tr><td>Fondo blanco</td><td><a href="https://fotosimple.cl/store/producto/fondo-tela-fotografia-2-x-3-metros-color-blanco/">Fondo tela 2 × 3 m blanco</a> · Fotosimple. Para la prenda plana y como alternativa</td><td class="n">19.990</td></tr>
+        <tr><td>Piso</td><td><a href="https://www.sodimac.cl/sodimac-cl/articulo/127221328/piso-vinilico-en-rollo-2-mm-2x30-m-harmony-gris-60-m2/127221329">Piso vinílico en rollo Harmony gris 2 mm</a> · Sodimac. Pedir corte de 2 × 1,5 m</td><td class="n">por confirmar</td></tr>
+        <tr class="group"><td colspan="3">Luz</td></tr>
+        <tr><td>L1 principal</td><td><a href="https://www.spdigital.cl/ulanzi-lc150bi-canon-led-bicolor-150w-montura-bowens/">Ulanzi LC150BI 150 W, Bowens</a> · SP Digital (también en <a href="https://apertura.cl/tienda/led-para-estudio/5822-ulanzi-lc150bi-canon-led-bicolor-150w-montura-bowens-6975357300728.html">Apertura</a>)</td><td class="n">303.700–309.900</td></tr>
+        <tr><td>Kit L1 + L2</td><td><a href="https://fotosimple.cl/store/categoria-producto/equipamiento/">Kit C-Stand + Godox SL-60W + Octagonal K2-90</a> · Fotosimple. La octa y el C-stand van con L1; la SL-60W es L2</td><td class="n">299.990</td></tr>
+        <tr><td>Softbox L2</td><td><a href="https://fotosimple.cl/store/producto/sotbox-godox-60x90cm-con-grilla-bowens-copia/">Softbox Godox 60 × 90 cm con grilla, Bowens</a> · Fotosimple</td><td class="n">44.990</td></tr>
+        <tr><td>Pie L2</td><td><a href="https://fotosimple.cl/store/producto/atril-pie-de-flash-3m-godox-300f/">Atril pie de luz 3 m Godox 300F</a> · Fotosimple</td><td class="n">49.990</td></tr>
+        <tr><td>Sacos de arena ×3</td><td><a href="https://fotosimple.cl/store/producto/bolsa-arena-para-tripode/">Bolsa de arena para trípode</a> · Fotosimple. Se llenan con arena o grava</td><td class="n">3 × 9.990</td></tr>
+        <tr><td>Rebotador</td><td><a href="https://fotosimple.cl/store/producto/pantalla-reflectora-5-en-1-150x200cm-godox/">Pantalla reflectora 5 en 1 150 × 200 cm Godox</a> · Fotosimple</td><td class="n">por confirmar</td></tr>
         <tr class="group"><td colspan="3">Cámara y control</td></tr>
-        <tr><td>Trípode con columna horizontal</td><td>Altura ≥ 1,6 m; la columna gira 90° para el modo cenital</td><td class="n">80–130 mil</td></tr>
-        <tr><td>Tarjeta gris + carta de color</td><td>Referencia de color para corregir todas las fotos igual</td><td class="n">25–60 mil</td></tr>
+        <tr><td>Trípode cenital</td><td><a href="https://www.paris.cl/tripode-camara-cenital-tr3pod-aluminio-profesional-plegable-MKERQ9VD1T.html">Tr3pod cenital aluminio, columna lateral</a> · Paris</td><td class="n">34.990</td></tr>
+        <tr><td>Tarjeta gris</td><td><a href="https://fotosimple.cl/store/producto/tarjeta-balance-de-grises/">Kit tarjetas balance de grises (blanca, gris, negra)</a> · Fotosimple</td><td class="n">5.990</td></tr>
+        <tr><td>Control Nikon</td><td><a href="https://www.tienda8.cl/inicio/control-remoto-alternativo-ml-l3-para-nikon-d3000-y-otras">Control remoto alternativo ML-L3</a> · Tienda8 (o el <a href="https://www.nikoncenter.cl/productos/accesorio_detail.php?sec=accesorios&amp;acc=519&amp;name=Control%20Remoto%20ML-L3">original en Nikon Chile</a>, $34.900, consultar)</td><td class="n">por confirmar</td></tr>
+        <tr><td>Batería extra</td><td><a href="https://www.lider.cl/ip/fotografia/bateria-kastar-para-nikon-en-el14-en-el14a-en-el14b-en-el14c/00063679060983">Batería Kastar EN-EL14</a> · Lider (despacho desde EE.UU., pedir con anticipación)</td><td class="n">28.990</td></tr>
+        <tr><td>Cable y soporte</td><td>Cable USB a mini-USB de 3 m y soporte de celular con rosca 1/4" (cualquier tienda de electrónica o <a href="https://www.falabella.com/falabella-cl/brand/ULANZI">Ulanzi en Falabella</a>)</td><td class="n">≈ 25.000</td></tr>
         <tr class="group"><td colspan="3">Prendas</td></tr>
-        <tr><td>Vaporizador vertical</td><td>De pie, con colgador</td><td class="n">35–60 mil</td></tr>
-        <tr><td>Perchero y kit de set</td><td>Perchas iguales, pinzas, alfileres, rodillo quita pelusa, cinta gaffer</td><td class="n">35–50 mil</td></tr>
-        <tr><td>Rebotadores</td><td>2 planchas de foam 1 × 2 m (una cara blanca, otra negra)</td><td class="n">20–30 mil</td></tr>
-        <tr><td>Marcadores de medida</td><td>4 marcadores impresos y plastificados (te los preparo yo)</td><td class="n">5–10 mil</td></tr>
-        <tr class="total"><td colspan="2">Total</td><td class="n">≈ 0,85–1,3 M</td></tr>
+        <tr><td>Vaporizador</td><td><a href="https://www.paris.cl/vaporizador-de-prendas-pure-pop-verde-rowenta-MKXA1S3VEF.html">Vaporizador de prendas Rowenta Pure Pop</a> · Paris</td><td class="n">29.990</td></tr>
+        <tr><td>Perchero</td><td><a href="https://www.sodimac.cl/sodimac-cl/lista/cat11640016/Percheros">Perchero una barra con ruedas</a> · Sodimac</td><td class="n">≈ 14.990</td></tr>
+        <tr><td>Marcadores de medida</td><td>4 marcadores impresos y plastificados (te los preparo yo)</td><td class="n">≈ 5.000</td></tr>
+        <tr class="total"><td colspan="2">Total estimado</td><td class="n">≈ 1.050.000</td></tr>
       </tbody>
     </table>
   </div>
-  <p class="note read">Precios de referencia de memoria, sin cotizar: verificar al comprar. Eligiendo gama media en todo, el total queda cerca de 1 M. No incluye cámara: se usan la Nikon D5100 y el iPhone 14. Para ellas suman unos 40–60 mil: control remoto ML-L3, una batería extra EN-EL14, un cable mini-USB largo y un soporte de celular para el trípode.</p>
+  <p class="note read">Precios tal como aparecían publicados; los marcados "por confirmar" no mostraban precio. El total incluye unos 70 mil estimados para esos ítems. Montaje del fondo: dos soportes de la barra al muro con taladro y tarugos, a 2,30 m de altura, separados ~2,15 m; el tubo del papel se pasa por la barra. Con 2 m de ancho, en los bordes puede asomar un par de centímetros de muro: se recorta en edición. Luces de fondo L3/L4 quedan para una segunda etapa (por ejemplo, otra Godox SL-60W).</p>
 </section>
 
 <!-- ============ GUÍA FOTÓGRAFO ============ -->
@@ -318,8 +324,8 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
       <dl>
         <dt>L1</dt><dd>45° al lado izquierdo de la modelo, a 1,2 m, alta (2,0 m) y apuntando al pecho</dd>
         <dt>L2</dt><dd>Lado opuesto, 2 pasos por debajo de L1 (≈ ¼ de potencia)</dd>
-        <dt>L3/L4</dt><dd>Apuntan al papel, no a la modelo. El gris debe verse parejo de esquina a esquina</dd>
-        <dt>Prueba</dt><dd>Al inicio: foto del fondo vacío. Si hay esquinas oscuras, ajustar L3/L4</dd>
+        <dt>Fondo</dt><dd>Sin luces propias en esta etapa. Girar L1 para que no le caiga directo al papel; el gris se ve parejo y yo lo igualo en edición</dd>
+        <dt>Prueba</dt><dd>Al inicio: foto del fondo vacío. Si una esquina sale muy oscura, abrir un poco L2</dd>
         <dt>Otras luces</dt><dd>Ventanas tapadas y luz de techo apagada</dd>
       </dl>
       <p class="note" style="margin-top:10px">Anotar las potencias en una cinta pegada a cada luz. La próxima sesión parte de ahí.</p>
@@ -453,5 +459,5 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
   </div>
 </section>
 
-<footer>Supuestos: techo ~2,40 m, puerta en el muro corto opuesto al fondo, modelo de ~1,65 m. Si algo de esto no coincide, el plano se ajusta.</footer>
+<footer>Supuestos: muro que admite tarugos (no volcanita sin refuerzo), techo ~2,40 m, puerta en el muro corto opuesto al fondo, modelo de ~1,65 m. Si algo de esto no coincide, el plano se ajusta.</footer>
 </div>
