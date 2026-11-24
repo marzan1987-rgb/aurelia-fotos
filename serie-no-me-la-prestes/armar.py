@@ -145,7 +145,7 @@ def cap1(tmp):
         # frase regenerada aparte (la toma original repetía "Gift Card")
         (os.path.join(VOZ, "frase_giftcard_B.mp3"), 0.0, 3.25, 15.0),   # Menos mal ... Gift Card de Aurelia.
         (os.path.join(VOZ, "frase_giftcard_B.mp3"), 3.62, 5.25, 18.2),  # ¡A ver si así me devuelve la mía!
-        (v, 20.95, 25.30, 20.0), # Unidad Aurelia: caso abierto.
+        (v, 23.10, 25.50, 20.2), # Unidad Aurelia: caso abierto. (21.0-22.6 es el "a ver si así..." viejo: no usar)
         (os.path.join(VOZ, "final_cierre_G.mp3"), 0, 3.5, 24.6),
     ]
     return unir(tmp, segs, voces, "capitulo1_final.mp4")
