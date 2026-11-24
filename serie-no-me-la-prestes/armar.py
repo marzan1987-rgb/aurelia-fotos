@@ -126,8 +126,8 @@ def cap1(tmp):
                  capas=[(flash, 0.0, 2.6), (subtitulo(["Eso fue hace 48 horas…"]), 0.2, 2.6)]),
         segmento(tmp, 6, 5.0, os.path.join(CLIPS, "cap1_t4_amigo_secreto.mp4"), filtro=CALIDO,
                  capas=[(flash, 0.0, 5.0),
-                        (subtitulo(["Menos mal su amigo secreto", "le regaló una Gift Card de Aurelia…"]), 0.2, 2.6),
-                        (subtitulo(["¡A ver si así me devuelve la mía!"]), 2.6, 5.0)]),
+                        (subtitulo(["Menos mal su amigo secreto", "le regaló una Gift Card de Aurelia…"]), 0.2, 3.35),
+                        (subtitulo(["¡A ver si así me devuelve la mía!"]), 3.35, 5.0)]),
         segmento(tmp, 7, 4.5, D, inicio=0.5, filtro=FRIO,
                  capas=[(ov.titulo(["unidad aurelia", "caso abierto"], ov.H * 0.80, tam=62), 0.3, 4.5)]),
     ]
@@ -142,7 +142,9 @@ def cap1(tmp):
         (v, 5.30, 6.40, 6.6),    # Treinta de noviembre.
         (v, 7.05, 11.60, 7.8),   # Mi hermana me pidió ... de la pega.
         (v, 12.05, 14.30, 12.4), # Eso fue hace cuarenta y ocho horas.
-        (v, 14.50, 19.40, 14.9), # Menos mal ... ¡a ver si así me devuelve la mía!
+        # frase regenerada aparte (la toma original repetía "Gift Card")
+        (os.path.join(VOZ, "frase_giftcard_B.mp3"), 0.0, 3.25, 15.0),   # Menos mal ... Gift Card de Aurelia.
+        (os.path.join(VOZ, "frase_giftcard_B.mp3"), 3.62, 5.25, 18.2),  # ¡A ver si así me devuelve la mía!
         (v, 20.95, 25.30, 20.0), # Unidad Aurelia: caso abierto.
         (os.path.join(VOZ, "final_cierre_G.mp3"), 0, 3.5, 24.6),
     ]
